@@ -1,0 +1,12 @@
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# Backend
+backend/WeatherTravelAssistant.Api/bin/
+backend/WeatherTravelAssistant.Api/obj/
+backend/WeatherTravelAssistant.Api/appsettings.Development.json
+
+# System
+.DS_Store
