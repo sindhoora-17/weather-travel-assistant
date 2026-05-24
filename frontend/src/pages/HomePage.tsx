@@ -5,7 +5,6 @@ import {
   getCurrentWeatherByCoords,
   getFiveDayForecastByCoords,
   calculateTravelScore,
-  // getTravelRecommendation,
   saveWeatherSearch,
 } from "../services/weatherService";
 import type { WeatherData, ForecastData } from "../types/weather";

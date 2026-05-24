@@ -2,7 +2,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 export async function getCurrentWeather(location: string) {
   const response = await fetch(
-    `${BACKEND_URL}/api/Weather/current?location=${encodeURIComponent(location)}`
+    `${BACKEND_URL}/api/Weather/current?location=${encodeURIComponent(location)}`,
   );
 
   if (!response.ok) {
@@ -14,7 +14,7 @@ export async function getCurrentWeather(location: string) {
 
 export async function getFiveDayForecast(location: string) {
   const response = await fetch(
-    `${BACKEND_URL}/api/Weather/forecast?location=${encodeURIComponent(location)}`
+    `${BACKEND_URL}/api/Weather/forecast?location=${encodeURIComponent(location)}`,
   );
 
   if (!response.ok) {
@@ -26,10 +26,10 @@ export async function getFiveDayForecast(location: string) {
 
 export async function getCurrentWeatherByCoords(
   latitude: number,
-  longitude: number
+  longitude: number,
 ) {
   const response = await fetch(
-    `${BACKEND_URL}/api/Weather/current/coordinates?latitude=${latitude}&longitude=${longitude}`
+    `${BACKEND_URL}/api/Weather/current/coordinates?latitude=${latitude}&longitude=${longitude}`,
   );
 
   if (!response.ok) {
@@ -41,10 +41,10 @@ export async function getCurrentWeatherByCoords(
 
 export async function getFiveDayForecastByCoords(
   latitude: number,
-  longitude: number
+  longitude: number,
 ) {
   const response = await fetch(
-    `${BACKEND_URL}/api/Weather/forecast/coordinates?latitude=${latitude}&longitude=${longitude}`
+    `${BACKEND_URL}/api/Weather/forecast/coordinates?latitude=${latitude}&longitude=${longitude}`,
   );
 
   if (!response.ok) {
@@ -58,7 +58,7 @@ export function calculateTravelScore(
   temp: number,
   humidity: number,
   windSpeed: number,
-  condition: string
+  condition: string,
 ) {
   let score = 100;
 
@@ -105,16 +105,13 @@ export async function saveWeatherSearch(searchData: {
   travelScore: number;
   notes: string;
 }) {
-  const response = await fetch(
-    `${BACKEND_URL}/api/WeatherSearches`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(searchData),
-    }
-  );
+  const response = await fetch(`${BACKEND_URL}/api/WeatherSearches`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(searchData),
+  });
 
   if (!response.ok) {
     throw new Error("Unable to save weather search.");
@@ -134,12 +131,9 @@ export async function getSavedWeatherSearches() {
 }
 
 export async function deleteWeatherSearch(id: number) {
-  const response = await fetch(
-    `${BACKEND_URL}/api/WeatherSearches/${id}`,
-    {
-      method: "DELETE",
-    }
-  );
+  const response = await fetch(`${BACKEND_URL}/api/WeatherSearches/${id}`, {
+    method: "DELETE",
+  });
 
   if (!response.ok) {
     throw new Error("Unable to delete weather search.");
@@ -163,7 +157,7 @@ export async function updateWeatherSearch(
     travelScore: number;
     notes: string;
     searchedAt: string;
-  }
+  },
 ) {
   const response = await fetch(`${BACKEND_URL}/api/WeatherSearches/${id}`, {
     method: "PUT",
