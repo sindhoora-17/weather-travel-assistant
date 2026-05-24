@@ -174,7 +174,7 @@ This project includes an About page with information about Product Manager Accel
 
 ## Demo Video
 
-Demo video link: Add your demo video link here
+Demo video link: https://youtu.be/v9_bp43iUkg
 
 ## Author
 
