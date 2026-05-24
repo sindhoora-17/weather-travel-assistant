@@ -94,21 +94,21 @@ public class WeatherSearchesController : ControllerBase
     }
 
     [HttpGet("export/csv")]
-public async Task<IActionResult> ExportSearchesAsCsv()
-{
-    var searches = await _context.WeatherSearches
-        .OrderByDescending(search => search.SearchedAt)
-        .ToListAsync();
-
-    var csv = "Id,Location,Country,Temperature,Humidity,WindSpeed,WeatherCondition,TravelScore,Notes,SearchedAt\n";
-
-    foreach (var search in searches)
+    public async Task<IActionResult> ExportSearchesAsCsv()
     {
-        csv += $"{search.Id},{search.Location},{search.Country},{search.Temperature},{search.Humidity},{search.WindSpeed},{search.WeatherCondition},{search.TravelScore},{search.Notes},{search.SearchedAt}\n";
+        var searches = await _context.WeatherSearches
+            .OrderByDescending(search => search.SearchedAt)
+            .ToListAsync();
+
+        var csv = "Id,Location,Country,Temperature,Humidity,WindSpeed,WeatherCondition,TravelScore,Notes,SearchedAt\n";
+
+        foreach (var search in searches)
+        {
+            csv += $"{search.Id},{search.Location},{search.Country},{search.Temperature},{search.Humidity},{search.WindSpeed},{search.WeatherCondition},{search.TravelScore},{search.Notes},{search.SearchedAt}\n";
+        }
+
+        var bytes = System.Text.Encoding.UTF8.GetBytes(csv);
+
+        return File(bytes, "text/csv", "weather-searches.csv");
     }
-
-    var bytes = System.Text.Encoding.UTF8.GetBytes(csv);
-
-    return File(bytes, "text/csv", "weather-searches.csv");
-}
 }
