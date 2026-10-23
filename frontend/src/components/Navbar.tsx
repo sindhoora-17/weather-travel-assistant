@@ -9,7 +9,7 @@ function Navbar() {
 
       <div className="nav-links">
         <Link to="/">Home</Link>
-        <Link to="/history">History</Link>
+        {import.meta.env.VITE_ENABLE_HISTORY === "true" && <Link to="/history">History</Link>}
         <Link to="/about">About</Link>
       </div>
     </nav>
