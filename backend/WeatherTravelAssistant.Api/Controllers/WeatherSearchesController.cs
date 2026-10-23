@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using System.Text;
 using Microsoft.EntityFrameworkCore;
 using WeatherTravelAssistant.Api.Data;
 using WeatherTravelAssistant.Api.Models;
@@ -100,14 +102,27 @@ public class WeatherSearchesController : ControllerBase
             .OrderByDescending(search => search.SearchedAt)
             .ToListAsync();
 
-        var csv = "Id,Location,Country,Temperature,Humidity,WindSpeed,WeatherCondition,TravelScore,Notes,SearchedAt\n";
-
-        foreach (var search in searches)
+        static string CsvField(object? value)
         {
-            csv += $"{search.Id},{search.Location},{search.Country},{search.Temperature},{search.Humidity},{search.WindSpeed},{search.WeatherCondition},{search.TravelScore},{search.Notes},{search.SearchedAt}\n";
+            var text = Convert.ToString(value, CultureInfo.InvariantCulture) ?? "";
+            // Quote fields with separators, line breaks or quotes; escape embedded quotes.
+            return text.IndexOfAny(new[] { ',', '"', '\\r', '\\n' }) >= 0
+                ? "\"" + text.Replace("\"", "\"\"") + "\""
+                : text;
         }
 
-        var bytes = System.Text.Encoding.UTF8.GetBytes(csv);
+        var csv = new StringBuilder("Id,Location,Country,Temperature,Humidity,WindSpeed,WeatherCondition,TravelScore,Notes,SearchedAt\\r\\n");
+        foreach (var search in searches)
+        {
+            var fields = new object?[] {
+                search.Id, search.Location, search.Country, search.Temperature,
+                search.Humidity, search.WindSpeed, search.WeatherCondition,
+                search.TravelScore, search.Notes, search.SearchedAt.ToString("O")
+            };
+            csv.AppendLine(string.Join(",", fields.Select(CsvField)));
+        }
+
+        var bytes = Encoding.UTF8.GetBytes(csv.ToString());
 
         return File(bytes, "text/csv", "weather-searches.csv");
     }
