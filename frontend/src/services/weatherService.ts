@@ -1,8 +1,9 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-export async function getCurrentWeather(location: string) {
+export async function getCurrentWeather(location: string, signal?: AbortSignal) {
   const response = await fetch(
     `${BACKEND_URL}/api/Weather/current?location=${encodeURIComponent(location)}`,
+    { signal },
   );
 
   if (!response.ok) {
@@ -12,9 +13,10 @@ export async function getCurrentWeather(location: string) {
   return response.json();
 }
 
-export async function getFiveDayForecast(location: string) {
+export async function getFiveDayForecast(location: string, signal?: AbortSignal) {
   const response = await fetch(
     `${BACKEND_URL}/api/Weather/forecast?location=${encodeURIComponent(location)}`,
+    { signal },
   );
 
   if (!response.ok) {
@@ -27,9 +29,11 @@ export async function getFiveDayForecast(location: string) {
 export async function getCurrentWeatherByCoords(
   latitude: number,
   longitude: number,
+  signal?: AbortSignal,
 ) {
   const response = await fetch(
     `${BACKEND_URL}/api/Weather/current/coordinates?latitude=${latitude}&longitude=${longitude}`,
+    { signal },
   );
 
   if (!response.ok) {
@@ -42,9 +46,11 @@ export async function getCurrentWeatherByCoords(
 export async function getFiveDayForecastByCoords(
   latitude: number,
   longitude: number,
+  signal?: AbortSignal,
 ) {
   const response = await fetch(
     `${BACKEND_URL}/api/Weather/forecast/coordinates?latitude=${latitude}&longitude=${longitude}`,
+    { signal },
   );
 
   if (!response.ok) {
