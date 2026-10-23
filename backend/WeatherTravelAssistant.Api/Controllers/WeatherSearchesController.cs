@@ -106,7 +106,7 @@ public class WeatherSearchesController : ControllerBase
         {
             var text = Convert.ToString(value, CultureInfo.InvariantCulture) ?? "";
             // Quote fields with separators, line breaks or quotes; escape embedded quotes.
-            return text.IndexOfAny(new[] { ',', '"', '\\r', '\\n' }) >= 0
+            return text.IndexOfAny(new[] { ',', '"', '\r', '\n' }) >= 0
                 ? "\"" + text.Replace("\"", "\"\"") + "\""
                 : text;
         }
