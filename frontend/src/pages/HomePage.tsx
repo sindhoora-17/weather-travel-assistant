@@ -45,7 +45,7 @@ function HomePage() {
       if (id !== currentRequest.current) return;
       setWeather(data); setForecast(forecastData);
       setLoading(false); // Display the result without waiting for history persistence.
-      try {
+      if (import.meta.env.VITE_ENABLE_HISTORY === "true") try {
         await saveWeatherSearch({
           location: data.name, country: data.sys.country,
           temperature: data.main.temp, humidity: data.main.humidity,
