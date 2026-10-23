@@ -44,6 +44,7 @@ function HomePage() {
       ]);
       if (id !== currentRequest.current) return;
       setWeather(data); setForecast(forecastData);
+      setLoading(false); // Display the result without waiting for history persistence.
       try {
         await saveWeatherSearch({
           location: data.name, country: data.sys.country,
