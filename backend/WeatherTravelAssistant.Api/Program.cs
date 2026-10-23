@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var sharedHistoryEnabled = builder.Configuration.GetValue<bool>("EnableSharedHistory");
+var sharedHistoryEnabled = (builder.Configuration.GetValue<bool?>("EnableSharedHistory") ?? builder.Environment.IsDevelopment());
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrWhiteSpace(connectionString))
 {
@@ -41,6 +41,12 @@ builder.Services.AddCors(options => options.AddPolicy("AllowFrontend", policy =>
 builder.Services.AddHttpClient<OpenWeatherService>();
 
 var app = builder.Build();
+if (sharedHistoryEnabled && app.Configuration.GetValue<bool>("ApplyMigrations"))
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await db.Database.MigrateAsync();
+}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
