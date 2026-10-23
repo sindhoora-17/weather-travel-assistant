@@ -111,7 +111,7 @@ public class WeatherSearchesController : ControllerBase
                 : text;
         }
 
-        var csv = new StringBuilder("Id,Location,Country,Temperature,Humidity,WindSpeed,WeatherCondition,TravelScore,Notes,SearchedAt\\r\\n");
+        var csv = new StringBuilder("Id,Location,Country,Temperature,Humidity,WindSpeed,WeatherCondition,TravelScore,Notes,SearchedAt\r\n");
         foreach (var search in searches)
         {
             var fields = new object?[] {
