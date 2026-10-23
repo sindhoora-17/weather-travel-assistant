@@ -2,6 +2,8 @@
 
 This monorepo has a Vite React frontend in `frontend/` and an ASP.NET Core 9 API in `backend/WeatherTravelAssistant.Api/`.
 
+**Security first:** The original public repository contained an OpenWeather key in `appsettings.json`. It has been removed from the current code, but it remains in Git history. **Revoke/rotate that key in OpenWeather and put only the new key in Railway variables.** Never reuse the exposed key.
+
 ## 1. Railway API
 
 1. Create a Railway project, choose **New Service > GitHub Repo**, and select `sindhoora-17/weather-travel-assistant`.
